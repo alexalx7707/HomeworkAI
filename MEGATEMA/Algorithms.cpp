@@ -149,7 +149,6 @@ int TravellingSalesmanProblemUCS(const map<string, vector<pair<string, int>>>& g
 int mstCost(const map<string, vector<pair<string, int>>>& graph, const set<string>& unvisited, const string& start) {
     // If all cities are visited, return 0
     if (unvisited.empty()) return 0;
-    
     map<string, bool> inMST;
     map<string, int> key;
     map<string, string> parent;
@@ -163,7 +162,7 @@ int mstCost(const map<string, vector<pair<string, int>>>& graph, const set<strin
     // Perform Prim's algorithm
     for (size_t count = 0; count < unvisited.size(); count++) {
         int min = INT_MAX;
-        string min_node;
+        auto min_node = graph.begin()->first;
         // Find the minimum key value
         for (const string& node : unvisited) {
             if (!inMST[node] && key[node] < min) {
@@ -201,6 +200,7 @@ int mstCost(const map<string, vector<pair<string, int>>>& graph, const set<strin
 // Function to calculate the heuristic cost
 int heuristic(const map<string, vector<pair<string, int>>>& graph, const string& current, const set<string>& unvisited, const string& start) {
     if (unvisited.empty()) return 0;
+
     // Find the minimum edge cost to the start city from the unvisited cities and return the minimum spanning tree cost
     int min_edge_cost = INT_MAX;
     for (const string& node : unvisited) {
@@ -223,7 +223,6 @@ int TravellingSalesmanProblemAStar(const map<string, vector<pair<string, int>>>&
     }
     // Push the start city into the priority queue
     pq.push({ start, {start}, 0, heuristic(graph, start, all_cities, start) });
-
     int min_cost = INT_MAX;
     // While the priority queue is not empty
     while (!pq.empty()) {
